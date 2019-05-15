@@ -7,7 +7,6 @@ Laravel/Lumen service providers for Appocular services.
 Registering service provider in Lumen:
 ``` php
 $app->register(Appocular\Clients\KeeperServiceProvider::class);
-$app->configure('keeper');
 ```
 
 To configure, add a `config/keeper.php` file:
@@ -17,6 +16,23 @@ To configure, add a `config/keeper.php` file:
 
 return [
     'base_uri' => env('KEEPER_BASE_URI', ''),
+];
+```
+
+## Difer
+
+Registering service provider in Lumen:
+``` php
+$app->register(Appocular\Clients\DifferServiceProvider::class);
+```
+
+To configure, add a `config/keeper.php` file:
+
+``` php
+<?php
+
+return [
+    'base_uri' => env(DIFFER_BASE_URI', ''),
 ];
 ```
 

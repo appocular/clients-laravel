@@ -1,0 +1,5 @@
+/vendor
+.env
+# Code coverage.
+coverage/*
+clover.xml

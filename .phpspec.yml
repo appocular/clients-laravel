@@ -1,0 +1,15 @@
+suites:
+  main:
+    namespace: Appocular\Clients
+    psr4_prefix: Appocular\Clients
+    src_path: src
+
+extensions:
+  LeanPHP\PhpSpec\CodeCoverage\CodeCoverageExtension:
+    format:
+      - php
+    output:
+      php: coverage/spec.cov
+    whitelist:
+      - app
+formatter.name: pretty

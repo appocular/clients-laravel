@@ -1,6 +1,8 @@
-# Keeper Laravel
+# Appocular clients for Laravel/Lumen
 
-Laravel/Lumen service provider for Keeper.
+Laravel/Lumen service providers for Appocular services.
+
+## Keeper
 
 Registering service provider in Lumen:
 ``` php
@@ -18,5 +20,5 @@ return [
 ];
 ```
 
-[![](https://img.shields.io/travis/com/appocular/keeper-laravel.svg?style=for-the-badge)](https://travis-ci.com/appocular/keeper-laravel)
-[![](https://img.shields.io/codecov/c/github/appocular/keeper-laravel.svg)](https://codecov.io/gh/appocular/keeper-laravel)
+[![](https://img.shields.io/travis/com/appocular/clients-laravel.svg?style=for-the-badge)](https://travis-ci.com/appocular/clients-laravel)
+[![](https://img.shields.io/codecov/c/github/appocular/clients-laravel.svg)](https://codecov.io/gh/appocular/keeper-laravel)

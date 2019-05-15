@@ -26,6 +26,7 @@
     },
     "require-dev": {
         "phpspec/phpspec": "^5.1",
-        "leanphp/phpspec-code-coverage": "dev-patch-1"
+        "leanphp/phpspec-code-coverage": "dev-patch-1",
+        "phpunit/phpcov": "^5.0"
     }
 }

@@ -31,7 +31,7 @@ class Differ implements Contracts\Differ
     public function submit(string $image_kid, string $baseline_kid) : void
     {
         $json = ['image_kid' => $image_kid, 'baseline_kid' => $baseline_kid];
-        $response = $this->client->post('diff', ['json' => $json]);
+        $response = $this->client->post('diff', ['json' => $json, 'timeout' => 5]);
         if ($response->getStatusCode() !== 200) {
             throw new RuntimeException('Bad response from Differ.');
         }

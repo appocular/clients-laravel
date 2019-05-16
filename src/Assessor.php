@@ -36,7 +36,7 @@ class Assessor implements Contracts\Assessor
             'diff_kid' => $diff_kid,
             'different' => $different,
         ];
-        $response = $this->client->post('diff', ['json' => $json]);
+        $response = $this->client->post('diff', ['json' => $json, 'timeout' => 5]);
         if ($response->getStatusCode() !== 200) {
             throw new RuntimeException('Bad response from Assessor.');
         }

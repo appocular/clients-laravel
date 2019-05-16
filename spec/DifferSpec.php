@@ -21,7 +21,7 @@ class DifferSpec extends ObjectBehavior
     {
         $response->getStatusCode()->willReturn(200);
         $expected_json = ['image_kid' => 'image id', 'baseline_kid' => 'baseline id'];
-        $client->post('diff', ['json' => $expected_json])->willReturn($response)->shouldBeCalled();
+        $client->post('diff', ['json' => $expected_json, 'timeout' => 5])->willReturn($response)->shouldBeCalled();
         $this->beConstructedWith($client);
         $this->submit('image id', 'baseline id')->shouldReturn(null);
     }
@@ -30,7 +30,7 @@ class DifferSpec extends ObjectBehavior
     {
         $response->getStatusCode()->willReturn(300);
         $expected_json = ['image_kid' => 'image id', 'baseline_kid' => 'baseline id'];
-        $client->post('diff', ['json' => $expected_json])->willReturn($response);
+        $client->post('diff', ['json' => $expected_json, 'timeout' => 5])->willReturn($response);
 
         $this->beConstructedWith($client);
         $this->shouldThrow(new RuntimeException('Bad response from Differ.'))->duringSubmit('image id', 'baseline id');

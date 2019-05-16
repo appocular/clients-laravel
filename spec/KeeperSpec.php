@@ -21,7 +21,7 @@ class KeeperSpec extends ObjectBehavior
     {
         $response->getStatusCode()->willReturn(200);
         $response->getBody()->willReturn(json_encode(['sha' => 'the kid']));
-        $client->post('image', ['body' => 'image data'])->willReturn($response)->shouldBeCalled();
+        $client->post('image', ['body' => 'image data', 'timeout' => 5])->willReturn($response)->shouldBeCalled();
         $this->beConstructedWith($client);
         $this->store('image data')->shouldReturn('the kid');
     }
@@ -30,7 +30,7 @@ class KeeperSpec extends ObjectBehavior
     {
         $response->getStatusCode()->willReturn(200);
         $response->getBody()->willReturn(json_encode(['lala' => 'the kid']));
-        $client->post('image', ['body' => 'image data'])->willReturn($response)->shouldBeCalled();
+        $client->post('image', ['body' => 'image data', 'timeout' => 5])->willReturn($response)->shouldBeCalled();
 
         $this->beConstructedWith($client);
         $this->shouldThrow(new RuntimeException('Bad response from Keeper.'))->duringStore('image data');
@@ -40,7 +40,7 @@ class KeeperSpec extends ObjectBehavior
     {
         $response->getStatusCode()->willReturn(300);
         $response->getBody()->willReturn(json_encode(['sha' => 'the kid']));
-        $client->post('image', ['body' => 'image data'])->willReturn($response)->shouldBeCalled();
+        $client->post('image', ['body' => 'image data', 'timeout' => 5])->willReturn($response)->shouldBeCalled();
 
         $this->beConstructedWith($client);
         $this->shouldThrow(new RuntimeException('Bad response from Keeper.'))->duringStore('image data');
@@ -51,7 +51,7 @@ class KeeperSpec extends ObjectBehavior
         $response->getStatusCode()->willReturn(200);
         $response->getBody()->willReturn('<png data>');
 
-        $client->get('image/somekid')->willReturn($response)->shouldBeCalled();
+        $client->get('image/somekid', ['timeout' => 5])->willReturn($response)->shouldBeCalled();
 
         $this->beConstructedWith($client);
         $this->get('somekid')->shouldReturn('<png data>');
@@ -61,7 +61,7 @@ class KeeperSpec extends ObjectBehavior
     {
         $response->getStatusCode()->willReturn(404);
 
-        $client->get('image/somekid')->willReturn($response)->shouldBeCalled();
+        $client->get('image/somekid', ['timeout' => 5])->willReturn($response)->shouldBeCalled();
 
         $this->beConstructedWith($client);
         $this->get('somekid')->shouldReturn(null);

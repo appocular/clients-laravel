@@ -26,7 +26,7 @@ class AssessorSpec extends ObjectBehavior
             'diff_kid' => 'diff id',
             'different' => true,
         ];
-        $client->post('diff', ['json' => $expected_json])->willReturn($response)->shouldBeCalled();
+        $client->post('diff', ['json' => $expected_json, 'timeout' => 5])->willReturn($response)->shouldBeCalled();
         $this->beConstructedWith($client);
         $this->reportDiff('image id', 'baseline id', 'diff id', true)->shouldReturn(null);
     }
@@ -40,7 +40,7 @@ class AssessorSpec extends ObjectBehavior
             'diff_kid' => 'diff id',
             'different' => true,
         ];
-        $client->post('diff', ['json' => $expected_json])->willReturn($response);
+        $client->post('diff', ['json' => $expected_json, 'timeout' => 5])->willReturn($response);
 
         $this->beConstructedWith($client);
         $this->shouldThrow(new RuntimeException('Bad response from Assessor.'))

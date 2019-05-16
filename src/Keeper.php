@@ -7,7 +7,6 @@ use RuntimeException;
 
 class Keeper implements Contracts\Keeper
 {
-
     /**
      * HTTP client.
      *
@@ -16,7 +15,7 @@ class Keeper implements Contracts\Keeper
     protected $client;
 
     /**
-     * Construct image store.
+     * Construct Keeper client.
      *
      * @param Client $client
      *   HTTP client to use.

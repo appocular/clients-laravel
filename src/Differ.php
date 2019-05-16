@@ -5,7 +5,7 @@ namespace Appocular\Clients;
 use GuzzleHttp\Client;
 use RuntimeException;
 
-class Differ
+class Differ implements Contracts\Differ
 {
     /**
      * HTTP client.
@@ -28,7 +28,7 @@ class Differ
     /**
      * {@inheritdoc}
      */
-    public function submit(string $image_kid, string $baseline_kid)
+    public function submit(string $image_kid, string $baseline_kid) : void
     {
         $json = ['image_kid' => $image_kid, 'baseline_kid' => $baseline_kid];
         $response = $this->client->post('diff', ['json' => $json]);

@@ -17,6 +17,7 @@ class DifferServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->configure('differ');
         $this->app->singleton(DifferContract::class, function ($app) {
             $uri = $app['config']->get('differ.base_uri');
             if (empty($uri)) {

@@ -19,7 +19,7 @@ return [
 ];
 ```
 
-## Difer
+## Differ
 
 Registering service provider in Lumen:
 ``` php
@@ -33,6 +33,23 @@ To configure, add a `config/keeper.php` file:
 
 return [
     'base_uri' => env(DIFFER_BASE_URI', ''),
+];
+```
+
+## Assessor
+
+Registering service provider in Lumen:
+``` php
+$app->register(Appocular\Clients\AssessorServiceProvider::class);
+```
+
+To configure, add a `config/assessor.php` file:
+
+``` php
+<?php
+
+return [
+    'base_uri' => env(ASSESSOR_BASE_URI', ''),
 ];
 ```
 

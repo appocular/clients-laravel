@@ -2,10 +2,10 @@
 
 namespace Appocular\Clients;
 
-use GuzzleHttp\Client;
-use Illuminate\Support\ServiceProvider;
 use Appocular\Clients\Contracts\Differ as DifferContract;
 use Appocular\Clients\Differ;
+use GuzzleHttp\Client;
+use Illuminate\Support\ServiceProvider;
 use RuntimeException;
 
 class DifferServiceProvider extends ServiceProvider

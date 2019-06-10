@@ -36,6 +36,16 @@ class KeeperSpec extends ObjectBehavior
         $this->shouldThrow(new RuntimeException('Bad response from Keeper.'))->duringStore('image data');
     }
 
+    function it_should_deal_with_horrible_responses(Client $client, Response $response)
+    {
+        $response->getStatusCode()->willReturn(200);
+        $response->getBody()->willReturn(null);
+        $client->post('image', ['body' => 'image data', 'timeout' => 5])->willReturn($response)->shouldBeCalled();
+
+        $this->beConstructedWith($client);
+        $this->shouldThrow(new RuntimeException('Bad response from Keeper.'))->duringStore('image data');
+    }
+
     function it_should_deal_with_bad_response_codes(Client $client, Response $response)
     {
         $response->getStatusCode()->willReturn(300);

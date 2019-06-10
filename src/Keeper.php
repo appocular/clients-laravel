@@ -32,7 +32,7 @@ class Keeper implements Contracts\Keeper
     {
         $response = $this->client->post('image', ['body' => $data, 'timeout' => 5]);
         $reply = json_decode($response->getBody());
-        if ($response->getStatusCode() !== 200 || !property_exists($reply, 'sha')) {
+        if ($response->getStatusCode() !== 200 || !is_object($reply) || !property_exists($reply, 'sha')) {
             throw new RuntimeException('Bad response from Keeper.');
         }
         return $reply->sha;

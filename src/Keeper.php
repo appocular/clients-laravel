@@ -31,20 +31,21 @@ class Keeper implements Contracts\Keeper
     public function store(string $data) : string
     {
         $response = $this->client->post('image', ['body' => $data, 'timeout' => 5]);
-        $reply = json_decode($response->getBody());
-        if ($response->getStatusCode() !== 200 || !is_object($reply) || !property_exists($reply, 'sha')) {
+        $location = $response->getHeader('Location');
+        if ($response->getStatusCode() !== 201 || count($location) != 1) {
             throw new RuntimeException('Bad response from Keeper.');
         }
-        return $reply->sha;
+        return $location[0];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function get($kid) : ?string
+    public function get($url) : ?string
     {
         try {
-            $response = $this->client->get('image/' . $kid, [ 'timeout' => 5]);
+            // As the ID is the URL of the image, just pass it to Guzzle.
+            $response = $this->client->get($url, [ 'timeout' => 5]);
             if ($response->getStatusCode() == 200) {
                 return $response->getBody();
             }

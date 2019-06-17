@@ -19,19 +19,18 @@ class KeeperSpec extends ObjectBehavior
 
     function it_should_put_files_to_keeper(Client $client, Response $response)
     {
-        $response->getStatusCode()->willReturn(200);
-        $response->getBody()->willReturn(json_encode(['sha' => 'the kid']));
+        $response->getStatusCode()->willReturn(201);
+        $response->getHeader('Location')->willReturn(['http://host/image/the_kid']);
         $client->post('image', ['body' => 'image data', 'timeout' => 5])->willReturn($response)->shouldBeCalled();
         $this->beConstructedWith($client);
-        $this->store('image data')->shouldReturn('the kid');
+        $this->store('image data')->shouldReturn('http://host/image/the_kid');
     }
 
     function it_should_deal_with_bad_responses(Client $client, Response $response)
     {
         $response->getStatusCode()->willReturn(200);
-        $response->getBody()->willReturn(json_encode(['lala' => 'the kid']));
         $client->post('image', ['body' => 'image data', 'timeout' => 5])->willReturn($response)->shouldBeCalled();
-
+        $response->getHeader('Location')->willReturn([]);
         $this->beConstructedWith($client);
         $this->shouldThrow(new RuntimeException('Bad response from Keeper.'))->duringStore('image data');
     }
@@ -39,7 +38,7 @@ class KeeperSpec extends ObjectBehavior
     function it_should_deal_with_horrible_responses(Client $client, Response $response)
     {
         $response->getStatusCode()->willReturn(200);
-        $response->getBody()->willReturn(null);
+        $response->getHeader('Location')->willReturn(['/image/the_kid', '/and/some/other']);
         $client->post('image', ['body' => 'image data', 'timeout' => 5])->willReturn($response)->shouldBeCalled();
 
         $this->beConstructedWith($client);
@@ -49,7 +48,7 @@ class KeeperSpec extends ObjectBehavior
     function it_should_deal_with_bad_response_codes(Client $client, Response $response)
     {
         $response->getStatusCode()->willReturn(300);
-        $response->getBody()->willReturn(json_encode(['sha' => 'the kid']));
+        $response->getHeader('Location')->willReturn(['/image/the_kid']);
         $client->post('image', ['body' => 'image data', 'timeout' => 5])->willReturn($response)->shouldBeCalled();
 
         $this->beConstructedWith($client);
@@ -61,19 +60,19 @@ class KeeperSpec extends ObjectBehavior
         $response->getStatusCode()->willReturn(200);
         $response->getBody()->willReturn('<png data>');
 
-        $client->get('image/somekid', ['timeout' => 5])->willReturn($response)->shouldBeCalled();
+        $client->get('http://host/image/somekid', ['timeout' => 5])->willReturn($response)->shouldBeCalled();
 
         $this->beConstructedWith($client);
-        $this->get('somekid')->shouldReturn('<png data>');
+        $this->get('http://host/image/somekid')->shouldReturn('<png data>');
     }
 
     function it_should_deal_with_missing_image(Client $client, Response $response)
     {
         $response->getStatusCode()->willReturn(404);
 
-        $client->get('image/somekid', ['timeout' => 5])->willReturn($response)->shouldBeCalled();
+        $client->get('http://host/image/somekid', ['timeout' => 5])->willReturn($response)->shouldBeCalled();
 
         $this->beConstructedWith($client);
-        $this->get('somekid')->shouldReturn(null);
+        $this->get('http://host/image/somekid')->shouldReturn(null);
     }
 }

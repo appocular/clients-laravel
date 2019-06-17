@@ -28,12 +28,12 @@ class Assessor implements Contracts\Assessor
     /**
      * {@inheritdoc}
      */
-    public function reportDiff(string $image_kid, string $baseline_kid, string $diff_kid, bool $different) : void
+    public function reportDiff(string $image_url, string $baseline_url, string $diff_url, bool $different) : void
     {
         $json = [
-            'image_kid' => $image_kid,
-            'baseline_kid' => $baseline_kid,
-            'diff_kid' => $diff_kid,
+            'image_url' => $image_url,
+            'baseline_url' => $baseline_url,
+            'diff_url' => $diff_url,
             'different' => $different,
         ];
         $response = $this->client->post('diff', ['json' => $json, 'timeout' => 5]);

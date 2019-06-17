@@ -20,19 +20,19 @@ class DifferSpec extends ObjectBehavior
     function it_should_submit_diffs_to_keeper(Client $client, Response $response)
     {
         $response->getStatusCode()->willReturn(200);
-        $expected_json = ['image_kid' => 'image id', 'baseline_kid' => 'baseline id'];
+        $expected_json = ['image_url' => 'image url', 'baseline_url' => 'baseline url'];
         $client->post('diff', ['json' => $expected_json, 'timeout' => 5])->willReturn($response)->shouldBeCalled();
         $this->beConstructedWith($client);
-        $this->submit('image id', 'baseline id')->shouldReturn(null);
+        $this->submit('image url', 'baseline url')->shouldReturn(null);
     }
 
     function it_should_deal_with_bad_response_codes(Client $client, Response $response)
     {
         $response->getStatusCode()->willReturn(300);
-        $expected_json = ['image_kid' => 'image id', 'baseline_kid' => 'baseline id'];
+        $expected_json = ['image_url' => 'image url', 'baseline_url' => 'baseline url'];
         $client->post('diff', ['json' => $expected_json, 'timeout' => 5])->willReturn($response);
 
         $this->beConstructedWith($client);
-        $this->shouldThrow(new RuntimeException('Bad response from Differ.'))->duringSubmit('image id', 'baseline id');
+        $this->shouldThrow(new RuntimeException('Bad response from Differ.'))->duringSubmit('image url', 'baseline url');
     }
 }

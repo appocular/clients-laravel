@@ -20,12 +20,13 @@ class KeeperServiceProvider extends ServiceProvider
         $this->app->configure('keeper');
         $this->app->singleton(KeeperContract::class, function ($app) {
             $uri = $app['config']->get('keeper.base_uri');
+            $token = $app['config']->get('keeper.shared_token');
             if (empty($uri)) {
                 throw new RuntimeException('No base uri for Keeper.');
             }
             $client = new Client(['base_uri' => $uri]);
 
-            return new Keeper($client);
+            return new Keeper($token, $client);
         });
     }
 }

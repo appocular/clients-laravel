@@ -17,11 +17,14 @@ class Keeper implements Contracts\Keeper
     /**
      * Construct Keeper client.
      *
+     * @param string $token
+     *   Authorisation token.
      * @param Client $client
      *   HTTP client to use.
      */
-    public function __construct(Client $client)
+    public function __construct(string $token, Client $client)
     {
+        $this->token = $token;
         $this->client = $client;
     }
 
@@ -30,7 +33,8 @@ class Keeper implements Contracts\Keeper
      */
     public function store(string $data) : string
     {
-        $response = $this->client->post('image', ['body' => $data, 'timeout' => 5]);
+        $headers = ['Authorization' => 'Bearer ' . $this->token];
+        $response = $this->client->post('image', ['body' => $data, 'timeout' => 5, 'headers' => $headers]);
         $location = $response->getHeader('Location');
         if ($response->getStatusCode() !== 201 || count($location) != 1) {
             throw new RuntimeException('Bad response from Keeper.');

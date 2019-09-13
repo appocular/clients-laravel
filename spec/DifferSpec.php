@@ -17,7 +17,7 @@ class DifferSpec extends ObjectBehavior
         $this->shouldHaveType(Differ::class);
     }
 
-    function it_should_submit_diffs_to_keeper(Client $client, Response $response)
+    function it_should_submit_diffs_to_differ(Client $client, Response $response)
     {
         $response->getStatusCode()->willReturn(200);
         $expected_json = ['image_url' => 'image url', 'baseline_url' => 'baseline url'];

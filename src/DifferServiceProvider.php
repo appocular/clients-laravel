@@ -20,7 +20,7 @@ class DifferServiceProvider extends ServiceProvider
         $this->app->configure('differ');
         $this->app->singleton(DifferContract::class, function ($app) {
             $uri = $app['config']->get('differ.base_uri');
-            $token = $app['config']->get('keeper.shared_token');
+            $token = $app['config']->get('differ.shared_token');
             if (empty($uri)) {
                 throw new RuntimeException('No base uri for Differ.');
             }

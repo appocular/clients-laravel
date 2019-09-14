@@ -11,9 +11,18 @@ use RuntimeException;
 
 class DifferSpec extends ObjectBehavior
 {
+    function let(Client $client)
+    {
+        $this->beConstructedWith('mytoken', $client);
+    }
+
+    function commonHeaders()
+    {
+        return ['timeout' => 5, 'headers' => ['Authorization' => 'Bearer mytoken']];
+    }
+
     function it_is_initializable(Client $client)
     {
-        $this->beConstructedWith($client);
         $this->shouldHaveType(Differ::class);
     }
 
@@ -21,8 +30,7 @@ class DifferSpec extends ObjectBehavior
     {
         $response->getStatusCode()->willReturn(200);
         $expected_json = ['image_url' => 'image url', 'baseline_url' => 'baseline url'];
-        $client->post('diff', ['json' => $expected_json, 'timeout' => 5])->willReturn($response)->shouldBeCalled();
-        $this->beConstructedWith($client);
+        $client->post('diff', ['json' => $expected_json] + $this->commonHeaders())->willReturn($response)->shouldBeCalled();
         $this->submit('image url', 'baseline url')->shouldReturn(null);
     }
 
@@ -30,9 +38,9 @@ class DifferSpec extends ObjectBehavior
     {
         $response->getStatusCode()->willReturn(300);
         $expected_json = ['image_url' => 'image url', 'baseline_url' => 'baseline url'];
-        $client->post('diff', ['json' => $expected_json, 'timeout' => 5])->willReturn($response);
+        $client->post('diff', ['json' => $expected_json] + $this->commonHeaders())->willReturn($response);
 
-        $this->beConstructedWith($client);
-        $this->shouldThrow(new RuntimeException('Bad response from Differ.'))->duringSubmit('image url', 'baseline url');
+        $this->shouldThrow(new RuntimeException('Bad response from Differ.'))
+            ->duringSubmit('image url', 'baseline url');
     }
 }

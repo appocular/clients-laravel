@@ -17,11 +17,14 @@ class Differ implements Contracts\Differ
     /**
      * Construct Differ client.
      *
+     * @param string $token
+     *   Authorisation token.
      * @param Client $client
      *   HTTP client to use.
      */
-    public function __construct(Client $client)
+    public function __construct(string $token, Client $client)
     {
+        $this->token = $token;
         $this->client = $client;
     }
 
@@ -30,8 +33,9 @@ class Differ implements Contracts\Differ
      */
     public function submit(string $image_url, string $baseline_url) : void
     {
+        $headers = ['Authorization' => 'Bearer ' . $this->token];
         $json = ['image_url' => $image_url, 'baseline_url' => $baseline_url];
-        $response = $this->client->post('diff', ['json' => $json, 'timeout' => 5]);
+        $response = $this->client->post('diff', ['json' => $json, 'timeout' => 5, 'headers' => $headers]);
         if ($response->getStatusCode() !== 200) {
             throw new RuntimeException('Bad response from Differ.');
         }

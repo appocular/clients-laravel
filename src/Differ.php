@@ -8,6 +8,13 @@ use RuntimeException;
 class Differ implements Contracts\Differ
 {
     /**
+     * Authorization token.
+     *
+     * @var string
+     */
+    protected $token;
+
+    /**
      * HTTP client.
      *
      * @var \GuzzleHttp\Client

@@ -8,6 +8,13 @@ use RuntimeException;
 class Keeper implements Contracts\Keeper
 {
     /**
+     * Authorization token.
+     *
+     * @var string
+     */
+    protected $token;
+
+    /**
      * HTTP client.
      *
      * @var \GuzzleHttp\Client

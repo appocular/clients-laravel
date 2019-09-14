@@ -11,9 +11,19 @@ use RuntimeException;
 
 class AssessorSpec extends ObjectBehavior
 {
+
+    function let(Client $client)
+    {
+        $this->beConstructedWith('mytoken', $client);
+    }
+
+    function commonHeaders()
+    {
+        return ['timeout' => 5, 'headers' => ['Authorization' => 'Bearer mytoken']];
+    }
+
     function it_is_initializable(Client $client)
     {
-        $this->beConstructedWith($client);
         $this->shouldHaveType(Assessor::class);
     }
 
@@ -26,8 +36,8 @@ class AssessorSpec extends ObjectBehavior
             'diff_url' => 'diff url',
             'different' => true,
         ];
-        $client->post('diff', ['json' => $expected_json, 'timeout' => 5])->willReturn($response)->shouldBeCalled();
-        $this->beConstructedWith($client);
+        $client->post('diff', ['json' => $expected_json] + $this->commonHeaders())
+            ->willReturn($response)->shouldBeCalled();
         $this->reportDiff('image url', 'baseline url', 'diff url', true)->shouldReturn(null);
     }
 
@@ -40,9 +50,8 @@ class AssessorSpec extends ObjectBehavior
             'diff_url' => 'diff url',
             'different' => true,
         ];
-        $client->post('diff', ['json' => $expected_json, 'timeout' => 5])->willReturn($response);
+        $client->post('diff', ['json' => $expected_json] + $this->commonHeaders())->willReturn($response);
 
-        $this->beConstructedWith($client);
         $this->shouldThrow(new RuntimeException('Bad response from Assessor.'))
             ->duringReportDiff('image url', 'baseline url', 'diff url', true);
     }

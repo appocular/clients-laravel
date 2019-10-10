@@ -12,13 +12,6 @@
             "email": "xen@xen.dk"
         }
     ],
-    "repositories" : [
-        {
-            "type" : "vcs",
-            "url" : "https://github.com/samsonasik/phpspec-code-coverage",
-            "no-api": true
-        }
-    ],
     "autoload": {
         "psr-4": {
             "Appocular\\Clients\\": "src/"
@@ -26,7 +19,7 @@
     },
     "require-dev": {
         "phpspec/phpspec": "^5.1",
-        "leanphp/phpspec-code-coverage": "dev-patch-1",
-        "phpunit/phpcov": "^5.0"
+        "phpunit/phpcov": "^5.0",
+        "friends-of-phpspec/phpspec-code-coverage": "^4.3"
     }
 }

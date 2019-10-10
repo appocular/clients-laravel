@@ -11,5 +11,5 @@ extensions:
     output:
       php: coverage/spec.cov
     whitelist:
-      - app
+      - src
 formatter.name: pretty

@@ -30,7 +30,8 @@ class DifferSpec extends ObjectBehavior
     {
         $response->getStatusCode()->willReturn(200);
         $expected_json = ['image_url' => 'image url', 'baseline_url' => 'baseline url'];
-        $client->post('diff', ['json' => $expected_json] + $this->commonHeaders())->willReturn($response)->shouldBeCalled();
+        $client->post('diff', ['json' => $expected_json] + $this->commonHeaders())
+            ->willReturn($response)->shouldBeCalled();
         $this->submit('image url', 'baseline url')->shouldReturn(null);
     }
 

@@ -38,7 +38,7 @@ class Assessor implements Contracts\Assessor
     /**
      * {@inheritdoc}
      */
-    public function reportDiff(string $image_url, string $baseline_url, string $diff_url, bool $different) : void
+    public function reportDiff(string $image_url, string $baseline_url, string $diff_url, bool $different): void
     {
         $headers = ['Authorization' => 'Bearer ' . $this->token];
 

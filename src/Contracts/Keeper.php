@@ -15,7 +15,7 @@ interface Keeper
      * @return string
      *   Keeper ID of stored image.
      */
-    public function store(string $data) : string;
+    public function store(string $data): string;
 
     /**
      * Get image.
@@ -28,5 +28,5 @@ interface Keeper
      * @return null|string
      *   PNG data or null if not found.
      */
-    public function get($kid) : ?string;
+    public function get($kid): ?string;
 }

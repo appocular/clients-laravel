@@ -38,7 +38,7 @@ class Keeper implements Contracts\Keeper
     /**
      * {@inheritdoc}
      */
-    public function store(string $data) : string
+    public function store(string $data): string
     {
         $headers = ['Authorization' => 'Bearer ' . $this->token];
         $response = $this->client->post('image', ['body' => $data, 'timeout' => 5, 'headers' => $headers]);
@@ -52,7 +52,7 @@ class Keeper implements Contracts\Keeper
     /**
      * {@inheritdoc}
      */
-    public function get($url) : ?string
+    public function get($url): ?string
     {
         try {
             // As the ID is the URL of the image, just pass it to Guzzle.

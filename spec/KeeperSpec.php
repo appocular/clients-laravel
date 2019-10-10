@@ -11,7 +11,6 @@ use RuntimeException;
 
 class KeeperSpec extends ObjectBehavior
 {
-
     function let(Client $client)
     {
         $this->beConstructedWith('mytoken', $client);
@@ -31,14 +30,16 @@ class KeeperSpec extends ObjectBehavior
     {
         $response->getStatusCode()->willReturn(201);
         $response->getHeader('Location')->willReturn(['http://host/image/the_kid']);
-        $client->post('image', ['body' => 'image data'] + $this->commonHeaders())->willReturn($response)->shouldBeCalled();
+        $client->post('image', ['body' => 'image data'] + $this->commonHeaders())
+            ->willReturn($response)->shouldBeCalled();
         $this->store('image data')->shouldReturn('http://host/image/the_kid');
     }
 
     function it_should_deal_with_bad_responses(Client $client, Response $response)
     {
         $response->getStatusCode()->willReturn(200);
-        $client->post('image', ['body' => 'image data'] + $this->commonHeaders())->willReturn($response)->shouldBeCalled();
+        $client->post('image', ['body' => 'image data'] + $this->commonHeaders())
+            ->willReturn($response)->shouldBeCalled();
         $response->getHeader('Location')->willReturn([]);
         $this->shouldThrow(new RuntimeException('Bad response from Keeper.'))->duringStore('image data');
     }
@@ -47,7 +48,8 @@ class KeeperSpec extends ObjectBehavior
     {
         $response->getStatusCode()->willReturn(200);
         $response->getHeader('Location')->willReturn(['/image/the_kid', '/and/some/other']);
-        $client->post('image', ['body' => 'image data'] + $this->commonHeaders())->willReturn($response)->shouldBeCalled();
+        $client->post('image', ['body' => 'image data'] + $this->commonHeaders())
+            ->willReturn($response)->shouldBeCalled();
 
         $this->shouldThrow(new RuntimeException('Bad response from Keeper.'))->duringStore('image data');
     }
@@ -56,7 +58,8 @@ class KeeperSpec extends ObjectBehavior
     {
         $response->getStatusCode()->willReturn(300);
         $response->getHeader('Location')->willReturn(['/image/the_kid']);
-        $client->post('image', ['body' => 'image data'] + $this->commonHeaders())->willReturn($response)->shouldBeCalled();
+        $client->post('image', ['body' => 'image data'] + $this->commonHeaders())
+            ->willReturn($response)->shouldBeCalled();
 
         $this->shouldThrow(new RuntimeException('Bad response from Keeper.'))->duringStore('image data');
     }

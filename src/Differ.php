@@ -38,7 +38,7 @@ class Differ implements Contracts\Differ
     /**
      * {@inheritdoc}
      */
-    public function submit(string $image_url, string $baseline_url) : void
+    public function submit(string $image_url, string $baseline_url): void
     {
         $headers = ['Authorization' => 'Bearer ' . $this->token];
         $json = ['image_url' => $image_url, 'baseline_url' => $baseline_url];

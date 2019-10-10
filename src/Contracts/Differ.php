@@ -12,5 +12,5 @@ interface Differ
      * @param string $baseline_kid
      *   Keeper ID of baseline image.
      */
-    public function submit(string $image_kid, string $baseline_kid) : void;
+    public function submit(string $image_kid, string $baseline_kid): void;
 }

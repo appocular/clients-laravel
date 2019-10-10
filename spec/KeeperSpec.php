@@ -13,12 +13,12 @@ class KeeperSpec extends ObjectBehavior
 {
     function let(Client $client)
     {
-        $this->beConstructedWith('mytoken', $client);
+        $this->beConstructedWith('mytoken', $client, 5);
     }
 
-    function commonHeaders()
+    function commonHeaders($timeout = 5)
     {
-        return ['timeout' => 5, 'headers' => ['Authorization' => 'Bearer mytoken']];
+        return ['timeout' => $timeout, 'headers' => ['Authorization' => 'Bearer mytoken']];
     }
 
     function it_is_initializable(Client $client)
@@ -81,5 +81,18 @@ class KeeperSpec extends ObjectBehavior
         $client->get('http://host/image/somekid', ['timeout' => 5])->willReturn($response)->shouldBeCalled();
 
         $this->get('http://host/image/somekid')->shouldReturn(null);
+    }
+
+    function it_has_configurable_timeout(Client $client, Response $response)
+    {
+        $response->getStatusCode()->willReturn(201);
+        $response->getHeader('Location')->willReturn(['http://host/image/the_kid']);
+
+        $client->post('image', ['body' => 'image data'] + $this->commonHeaders(30))
+            ->willReturn($response)->shouldBeCalled();
+
+        $this->beConstructedWith('mytoken', $client, 30);
+
+        $this->store('image data')->shouldReturn('http://host/image/the_kid');
     }
 }

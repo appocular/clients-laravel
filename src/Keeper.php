@@ -22,17 +22,27 @@ class Keeper implements Contracts\Keeper
     protected $client;
 
     /**
+     * Request timeout.
+     *
+     * @var int
+     */
+    protected $timeout;
+
+    /**
      * Construct Keeper client.
      *
      * @param string $token
      *   Authorisation token.
      * @param Client $client
      *   HTTP client to use.
+     * @param int $timeout
+     *   Request timeout.
      */
-    public function __construct(string $token, Client $client)
+    public function __construct(string $token, Client $client, int $timeout = 5)
     {
         $this->token = $token;
         $this->client = $client;
+        $this->timeout = $timeout;
     }
 
     /**
@@ -41,7 +51,7 @@ class Keeper implements Contracts\Keeper
     public function store(string $data): string
     {
         $headers = ['Authorization' => 'Bearer ' . $this->token];
-        $response = $this->client->post('image', ['body' => $data, 'timeout' => 5, 'headers' => $headers]);
+        $response = $this->client->post('image', ['body' => $data, 'timeout' => $this->timeout, 'headers' => $headers]);
         $location = $response->getHeader('Location');
         if ($response->getStatusCode() !== 201 || count($location) != 1) {
             throw new RuntimeException('Bad response from Keeper.');
@@ -56,7 +66,7 @@ class Keeper implements Contracts\Keeper
     {
         try {
             // As the ID is the URL of the image, just pass it to Guzzle.
-            $response = $this->client->get($url, [ 'timeout' => 5]);
+            $response = $this->client->get($url, [ 'timeout' => $this->timeout]);
             if ($response->getStatusCode() == 200) {
                 return $response->getBody();
             }

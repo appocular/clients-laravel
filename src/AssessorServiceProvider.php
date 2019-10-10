@@ -21,12 +21,13 @@ class AssessorServiceProvider extends ServiceProvider
         $this->app->singleton(AssessorContract::class, function ($app) {
             $uri = $app['config']->get('assessor.base_uri');
             $token = $app['config']->get('assessor.shared_token');
+            $timeout = $app['config']->get('assessor.timeout', 5);
             if (empty($uri)) {
                 throw new RuntimeException('No base uri for Assessor.');
             }
             $client = new Client(['base_uri' => $uri]);
 
-            return new Assessor($token, $client);
+            return new Assessor($token, $client, $timeout);
         });
     }
 }

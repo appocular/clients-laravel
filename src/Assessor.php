@@ -22,16 +22,26 @@ class Assessor implements Contracts\Assessor
     protected $client;
 
     /**
+     * Request timeout.
+     *
+     * @var int
+     */
+    protected $timeout;
+
+    /**
      * Construct Appocular client.
      *
      * @param string $token
      *   Authorisation token.
      * @param Client $client
      *   HTTP client to use.
+     * @param int $timeout
+     *   Request timeout.
      */
-    public function __construct(string $token, Client $client)
+    public function __construct(string $token, Client $client, int $timeout = 5)
     {
         $this->token = $token;
+        $this->timeout = $timeout;
         $this->client = $client;
     }
 
@@ -48,7 +58,7 @@ class Assessor implements Contracts\Assessor
             'diff_url' => $diff_url,
             'different' => $different,
         ];
-        $response = $this->client->post('diff', ['json' => $json, 'timeout' => 5, 'headers' => $headers]);
+        $response = $this->client->post('diff', ['json' => $json, 'timeout' => $this->timeout, 'headers' => $headers]);
         if ($response->getStatusCode() !== 200) {
             throw new RuntimeException('Bad response from Assessor.');
         }

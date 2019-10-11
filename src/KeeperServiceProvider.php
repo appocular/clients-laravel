@@ -27,7 +27,7 @@ class KeeperServiceProvider extends ServiceProvider
             }
             $client = new Client(['base_uri' => $uri]);
 
-            return new Keeper($token, $client, 5);
+            return new Keeper($token, $client, $timeout);
         });
     }
 }

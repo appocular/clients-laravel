@@ -21,7 +21,10 @@ class KeeperServiceProvider extends ServiceProvider
         $this->app->singleton(KeeperContract::class, function ($app) {
             $uri = $app['config']->get('keeper.base_uri');
             $token = $app['config']->get('keeper.shared_token');
-            $timeout = $app['config']->get('keeper.timeout', 5);
+            $timeout = (int) $app['config']->get('keeper.timeout', 5);
+            if ($timeout < 1) {
+                $timeout = 5;
+            }
             if (empty($uri)) {
                 throw new RuntimeException('No base uri for Keeper.');
             }

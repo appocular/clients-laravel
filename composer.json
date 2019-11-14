@@ -18,7 +18,7 @@
         }
     },
     "require-dev": {
-        "phpspec/phpspec": "^5.1",
+        "phpspec/phpspec": "^6.0",
         "phpunit/phpcov": "^6.0",
         "friends-of-phpspec/phpspec-code-coverage": "^4.3"
     }

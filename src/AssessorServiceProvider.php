@@ -1,33 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Appocular\Clients;
 
+use Appocular\Clients\Contracts\Assessor as AssessorContract;
 use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
-use Appocular\Clients\Contracts\Assessor as AssessorContract;
-use Appocular\Clients\Assessor;
 use RuntimeException;
 
 class AssessorServiceProvider extends ServiceProvider
 {
     /**
      * Register bindings in the container.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->app->configure('assessor');
-        $this->app->singleton(AssessorContract::class, function ($app) {
+        $this->app->singleton(AssessorContract::class, static function ($app): AssessorContract {
             $uri = $app['config']->get('assessor.base_uri');
             $token = $app['config']->get('assessor.shared_token');
             $timeout = (int) $app['config']->get('assessor.timeout', 5);
+
             if ($timeout < 1) {
                 $timeout = 5;
             }
-            if (empty($uri)) {
+
+            if (!$uri) {
                 throw new RuntimeException('No base uri for Assessor.');
             }
+
             $client = new Client(['base_uri' => $uri]);
 
             return new Assessor($token, $client, $timeout);

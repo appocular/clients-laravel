@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Appocular\Clients\Contracts;
 
 interface Keeper
@@ -25,8 +27,8 @@ interface Keeper
      * @param string $kid
      *   Image Keeper ID to fetch.
      *
-     * @return null|string
+     * @return string|null
      *   PNG data or null if not found.
      */
-    public function get($kid): ?string;
+    public function get(string $kid): ?string;
 }

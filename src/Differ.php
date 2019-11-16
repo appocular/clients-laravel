@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Appocular\Clients;
 
 use GuzzleHttp\Client;
@@ -33,7 +35,7 @@ class Differ implements Contracts\Differ
      *
      * @param string $token
      *   Authorisation token.
-     * @param Client $client
+     * @param \GuzzleHttp\Client $client
      *   HTTP client to use.
      * @param int $timeout
      *   Request timeout.
@@ -53,6 +55,7 @@ class Differ implements Contracts\Differ
         $headers = ['Authorization' => 'Bearer ' . $this->token];
         $json = ['image_url' => $image_url, 'baseline_url' => $baseline_url];
         $response = $this->client->post('diff', ['json' => $json, 'timeout' => $this->timeout, 'headers' => $headers]);
+
         if ($response->getStatusCode() !== 200) {
             throw new RuntimeException('Bad response from Differ.');
         }

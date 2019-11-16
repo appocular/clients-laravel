@@ -1,13 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Appocular\Clients;
 
 use Appocular\Clients\Keeper;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use RuntimeException;
+
+// phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
+// phpcs:disable Squiz.Scope.MethodScope.Missing
+// phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint
 
 class KeeperSpec extends ObjectBehavior
 {
@@ -16,12 +21,12 @@ class KeeperSpec extends ObjectBehavior
         $this->beConstructedWith('mytoken', $client, 5);
     }
 
-    function commonHeaders($timeout = 5)
+    function commonHeaders(int $timeout = 5)
     {
         return ['timeout' => $timeout, 'headers' => ['Authorization' => 'Bearer mytoken']];
     }
 
-    function it_is_initializable(Client $client)
+    function it_is_initializable()
     {
         $this->shouldHaveType(Keeper::class);
     }

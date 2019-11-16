@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Appocular\Clients;
 
 use GuzzleHttp\Client;
@@ -33,7 +35,7 @@ class Assessor implements Contracts\Assessor
      *
      * @param string $token
      *   Authorisation token.
-     * @param Client $client
+     * @param \GuzzleHttp\Client $client
      *   HTTP client to use.
      * @param int $timeout
      *   Request timeout.
@@ -59,6 +61,7 @@ class Assessor implements Contracts\Assessor
             'different' => $different,
         ];
         $response = $this->client->post('diff', ['json' => $json, 'timeout' => $this->timeout, 'headers' => $headers]);
+
         if ($response->getStatusCode() !== 200) {
             throw new RuntimeException('Bad response from Assessor.');
         }

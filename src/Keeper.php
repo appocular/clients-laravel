@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Appocular\Clients;
 
+use Exception;
 use GuzzleHttp\Client;
 use RuntimeException;
 
@@ -33,7 +36,7 @@ class Keeper implements Contracts\Keeper
      *
      * @param string $token
      *   Authorisation token.
-     * @param Client $client
+     * @param \GuzzleHttp\Client $client
      *   HTTP client to use.
      * @param int $timeout
      *   Request timeout.
@@ -53,9 +56,11 @@ class Keeper implements Contracts\Keeper
         $headers = ['Authorization' => 'Bearer ' . $this->token];
         $response = $this->client->post('image', ['body' => $data, 'timeout' => $this->timeout, 'headers' => $headers]);
         $location = $response->getHeader('Location');
-        if ($response->getStatusCode() !== 201 || count($location) != 1) {
+
+        if ($response->getStatusCode() !== 201 || \count($location) !== 1) {
             throw new RuntimeException('Bad response from Keeper.');
         }
+
         return $location[0];
     }
 
@@ -67,12 +72,14 @@ class Keeper implements Contracts\Keeper
         try {
             // As the ID is the URL of the image, just pass it to Guzzle.
             $response = $this->client->get($url, [ 'timeout' => $this->timeout]);
-            if ($response->getStatusCode() == 200) {
+
+            if ($response->getStatusCode() === 200) {
                 return $response->getBody();
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // On any error return nothing.
         }
+
         return null;
     }
 }

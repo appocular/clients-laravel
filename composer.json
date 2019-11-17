@@ -21,7 +21,7 @@
         "phpspec/phpspec": "^6.0",
         "phpunit/phpcov": "^6.0",
         "friends-of-phpspec/phpspec-code-coverage": "^4.3",
-        "appocular/coding-standard": "@dev"
+        "appocular/coding-standard": "^1"
     },
     "repositories": [
         {

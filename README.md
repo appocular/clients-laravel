@@ -53,5 +53,5 @@ return [
 ];
 ```
 
-[![](https://img.shields.io/travis/com/appocular/clients-laravel.svg?style=for-the-badge)](https://travis-ci.com/appocular/clients-laravel)
-[![](https://img.shields.io/codecov/c/github/appocular/clients-laravel.svg)](https://codecov.io/gh/appocular/keeper-laravel)
+[![](https://github.com/appocular/clients-laravel/workflows/Run%20checks%20and%20tests/badge.svg)](https://github.com/appocular/clients-laravel/actions)
+[![](https://img.shields.io/codecov/c/github/appocular/clients-laravel.svg)](https://codecov.io/gh/appocular/clients-laravel)

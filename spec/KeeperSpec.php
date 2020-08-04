@@ -8,6 +8,7 @@ use Appocular\Clients\Keeper;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use PhpSpec\ObjectBehavior;
+use Psr\Http\Message\StreamInterface;
 use RuntimeException;
 
 // phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
@@ -69,10 +70,11 @@ class KeeperSpec extends ObjectBehavior
         $this->shouldThrow(new RuntimeException('Bad response from Keeper.'))->duringStore('image data');
     }
 
-    function it_should_return_images_from_keeper(Client $client, Response $response)
+    function it_should_return_images_from_keeper(Client $client, Response $response, StreamInterface $stream)
     {
+        $stream->__toString()->willReturn('<png data>');
         $response->getStatusCode()->willReturn(200);
-        $response->getBody()->willReturn('<png data>');
+        $response->getBody()->willReturn($stream);
 
         $client->get('http://host/image/somekid', ['timeout' => 5])->willReturn($response)->shouldBeCalled();
 

@@ -74,7 +74,7 @@ class Keeper implements Contracts\Keeper
             $response = $this->client->get($url, [ 'timeout' => $this->timeout]);
 
             if ($response->getStatusCode() === 200) {
-                return $response->getBody();
+                return (string) $response->getBody();
             }
         } catch (Exception $e) {
             // On any error return nothing.

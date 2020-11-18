@@ -23,7 +23,7 @@
         "friends-of-phpspec/phpspec-code-coverage": "^5.0",
         "appocular/coding-standard": "^1",
         "symfony/event-dispatcher": "^4",
-        "symfony/console": "^4"
+        "symfony/console": "^5"
     },
     "repositories": [
         {

@@ -22,7 +22,7 @@
         "phpunit/phpcov": "^7.0",
         "friends-of-phpspec/phpspec-code-coverage": "^5.0",
         "appocular/coding-standard": "^1",
-        "symfony/event-dispatcher": "^4",
+        "symfony/event-dispatcher": "^5",
         "symfony/console": "^5"
     },
     "repositories": [
